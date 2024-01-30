@@ -1,0 +1,31 @@
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.searchinput {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.svg-inline--fa {
+  color: #ccc;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.svg-inline--fa:hover {
+  color: #333;
+}
