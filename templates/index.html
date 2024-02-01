@@ -14,148 +14,165 @@
   </head>
   <body>
     <div id="container" class="container">
-      <h1>Stock Search</h1>
-      <div class="search">
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="search"
-          class="svg-inline--fa fa-search fa-w-16"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-        >
-          <path
-            fill="currentColor"
-            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-          ></path>
-        </svg>
-        <input
-          type="text"
-          id="searchinput"
-          class="searchinput"
-          placeholder="Enter Stock Ticker Symbol"
-        />
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="times"
-          class="svg-inline--fa fa-times fa-w-11"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 352 512"
-        >
-          <path
-            fill="currentColor"
-            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-          ></path>
-        </svg>
-      </div>
-      <div class="tabs">
-        <button class="tab" id="company" onclick="getCompanyDetail()">
-          Company
-        </button>
-        <button class="tab" id="stock" onclick="getStockSummary()">
-          Stock Summary
-        </button>
-        <button class="tab" id="chart" onclick="getChart()">Charts</button>
-        <button class="tab" id="news" onclick="getLatestNews()">
-          Latest News
-        </button>
-      </div>
-      <div class="tabcontents" id="tabcontents">
-        <!-- Company -->
-        <div class="tabcontent active" id="companydetail">
-          <div class="companyiconcontainer">
-            <img
-              id="companyicon"
-              src="https://storage.googleapis.com/iex/api/logos/AAPL.png"
-              alt="company icon"
-            />
-          </div>
-          <div class="companytable">
-            <table>
-              <tr>
-                <td>Company Name</td>
-                <td id="companyname">Apple Inc.</td>
-              </tr>
-              <tr>
-                <td>Stock Ticker Symbol</td>
-                <td id="stocktickersymbol">AAPL</td>
-              </tr>
-              <tr>
-                <td>Stock Exchange Code</td>
-                <td id="stockexchangecode">NASDAQ</td>
-              </tr>
-              <tr>
-                <td>Company IPO date</td>
-                <td id="companyipodate">1980-12-12</td>
-              </tr>
-              <tr>
-                <td>Category</td>
-                <td id="category">Technology</td>
-              </tr>
-            </table>
-          </div>
+      <div class="searchcontainer">
+        <div class="titlecontainer">
+          <h1 class="websitetitle">Stock Search</h1>
         </div>
-        <!-- Stock Summary -->
-        <div class="tabcontent inactive" id="stocksummary">
-          <div class="stocktable">
-            <table>
-              <tr>
-                <td>Stock Ticker Symbol</td>
-                <td id="stocktickersymbol2">AAPL</td>
-              </tr>
-              <tr>
-                <td>Trading Day</td>
-                <td id="tradingday">2020-10-16</td>
-              </tr>
-              <tr>
-                <td>Previous Closing Price</td>
-                <td id="previousclosingprice">119.02</td>
-              </tr>
-              <tr>
-                <td>Opening Price</td>
-                <td id="openingprice">119.96</td>
-              </tr>
-              <tr>
-                <td>High Price</td>
-                <td id="highprice">120.42</td>
-              </tr>
-              <tr>
-                <td>Low Price</td>
-                <td id="lowprice">118.96</td>
-              </tr>
-              <tr>
-                <td>Change</td>
-                <td id="change">-0.94</td>
-              </tr>
-              <tr>
-                <td>Change Percent</td>
-                <td id="changepercent">-0.79%</td>
-              </tr>
-            </table>
-            <!-- recommendation trend -->
-            <div class="recommendationtrend" id="recommendationtrend">
+
+        <div class="search">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="search"
+            class="svg-inline--fa fa-search fa-w-16"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+            ></path>
+          </svg>
+          <input
+            type="text"
+            id="searchinput"
+            class="searchinput"
+            placeholder="Enter Stock Ticker Symbol"
+          />
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="times"
+            class="svg-inline--fa fa-times fa-w-11"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 352 512"
+          >
+            <path
+              fill="currentColor"
+              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div class="resultcontainer">
+        <div class="tabs">
+          <a class="tab active" id="company" onclick="getCompanyDetail()">
+            Company
+          </a>
+          <a class="tab inactive" id="stock" onclick="getStockSummary()">
+            Stock Summary
+          </a>
+          <a class="tab inactive" id="chart" onclick="getChart()">Charts</a>
+          <a class="tab inactive" id="news" onclick="getLatestNews()">
+            Latest News
+          </a>
+        </div>
+        <div class="tabcontents" id="tabcontents">
+          <!-- Company -->
+          <div class="tabcontent active" id="companydetail">
+            <div class="companyiconcontainer">
+              <img
+                id="companyicon"
+                src="https://storage.googleapis.com/iex/api/logos/AAPL.png"
+                alt="company icon"
+              />
+            </div>
+            <div class="companytable">
               <table>
                 <tr>
-                  <td class="stongselltitle" id="stongselltitle">
-                    Strong Sell
-                  </td>
-                  <td class="strongsell" id="strongsell">0</td>
-                  <td class="sell" id="sell">0</td>
-                  <td class="hold" id="hold">6</td>
-                  <td class="buy" id="buy">6</td>
-                  <td class="strongbuy" id="strongbuy">19</td>
-                  <td class="strongbuytitle" id="strongbuytitle">Strong Buy</td>
+                  <td>Company Name</td>
+                  <td id="companyname">Apple Inc.</td>
+                </tr>
+                <tr>
+                  <td>Stock Ticker Symbol</td>
+                  <td id="stocktickersymbol">AAPL</td>
+                </tr>
+                <tr>
+                  <td>Stock Exchange Code</td>
+                  <td id="stockexchangecode">NASDAQ</td>
+                </tr>
+                <tr>
+                  <td>Company IPO date</td>
+                  <td id="companyipodate">1980-12-12</td>
+                </tr>
+                <tr>
+                  <td>Category</td>
+                  <td id="category">Technology</td>
                 </tr>
               </table>
-              <h2>Recommendation Trends</h2>
             </div>
           </div>
-          <div class="tabcontent inactive" id="chartdetail"></div>
+          <!-- Stock Summary -->
+          <div class="tabcontent inactive" id="stocksummary">
+            <div class="stocktable">
+              <table>
+                <tr>
+                  <td>Stock Ticker Symbol</td>
+                  <td id="stocktickersymbol2">AAPL</td>
+                </tr>
+                <tr>
+                  <td>Trading Day</td>
+                  <td id="tradingday">2020-10-16</td>
+                </tr>
+                <tr>
+                  <td>Previous Closing Price</td>
+                  <td id="previousclosingprice">119.02</td>
+                </tr>
+                <tr>
+                  <td>Opening Price</td>
+                  <td id="openingprice">119.96</td>
+                </tr>
+                <tr>
+                  <td>High Price</td>
+                  <td id="highprice">120.42</td>
+                </tr>
+                <tr>
+                  <td>Low Price</td>
+                  <td id="lowprice">118.96</td>
+                </tr>
+                <tr>
+                  <td>Change</td>
+                  <td>
+                    <p id="change">-0.94</p>
+                    <img id="valuearrow" src="static\img\GreenArrowUp.png" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Change Percent</td>
+                  <td>
+                    <p id="changepercent">-0.79%</p>
+                    <img id="percentarrow" src="static\img\GreenArrowUp.png" />
+                  </td>
+                </tr>
+              </table>
+              <!-- recommendation trend -->
+              <div class="recommendationtrend" id="recommendationtrend">
+                <table>
+                  <tr>
+                    <td class="stongselltitle" id="stongselltitle">
+                      Strong Sell
+                    </td>
+                    <td class="strongsell" id="strongsell">0</td>
+                    <td class="sell" id="sell">0</td>
+                    <td class="hold" id="hold">6</td>
+                    <td class="buy" id="buy">6</td>
+                    <td class="strongbuy" id="strongbuy">19</td>
+                    <td class="strongbuytitle" id="strongbuytitle">
+                      Strong Buy
+                    </td>
+                  </tr>
+                </table>
+                <h2>Recommendation Trends</h2>
+              </div>
+            </div>
+          </div>
+          <!-- Chart -->
+          <div class="tabcontent inactive" id="chartsummary"></div>
+          <!-- Latest News -->
           <div class="tabcontent inactive" id="latestnews"></div>
         </div>
       </div>

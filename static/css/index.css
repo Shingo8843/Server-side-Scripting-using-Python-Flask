@@ -1,31 +1,148 @@
-.active {
+.body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  align-items: center;
+}
+.searchcontainer {
   display: block;
+  background-attachment: fixed;
+  background-image: url("../img/back.svg");
+  background-size: auto;
+  width: 100%;
+  height: 301px;
+  background-repeat: no-repeat;
+  background-position: top;
 }
-
-.inactive {
-  display: none;
+.titlecontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.websitetitle {
+  font-size: 36px;
+  font-weight: bold;
+  align-self: center;
+}
 .search {
   display: flex;
   align-items: center;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 5px;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .searchinput {
-  border: none;
+  border: 1px solid #ccc;
+  padding: 5px;
   outline: none;
   flex-grow: 1;
+  font-size: 24px;
 }
 
 .svg-inline--fa {
   color: #ccc;
   margin-right: 5px;
   cursor: pointer;
+  height: 24px;
+  width: auto;
+  padding: 5px;
 }
 
 .svg-inline--fa:hover {
   color: #333;
+}
+.resultcontainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0% 20% 0% 20%;
+  box-sizing: border-box;
+  align-items: center;
+}
+.tabs {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  background-color: whitesmoke;
+}
+.tab {
+  margin-right: 5px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+  width: fit-content;
+}
+.tab:hover {
+  color: #333;
+}
+.tab.active {
+  background-color: #ccc;
+}
+.tab.inactive {
+  background-color: whitesmoke;
+}
+.tabcontent {
+  display: none;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  align-content: center;
+}
+.tabcontent.active {
+  display: block;
+}
+.tabcontent.inactive {
+  display: none;
+}
+.companyiconcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  width: 100%;
+}
+.companytable {
+  justify-content: center;
+  width: 100%;
+  display: flex;
+}
+.stocktable {
+  justify-content: center;
+  width: 100%;
+  display: flex;
+}
+table {
+  width: 70%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-top: 1px solid #333;
+}
+tr {
+  border-bottom: 1px solid #333;
+}
+td {
+  padding: 8px;
+  text-align: left;
+  width: 50%;
+}
+tr td:first-child {
+  text-align: right;
 }

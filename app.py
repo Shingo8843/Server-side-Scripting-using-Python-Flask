@@ -3,9 +3,10 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 app = Flask(__name__)
 articles = []
 chart = []
-stocks = []
+stock = []
 company = []
 recommendation = []
+companySymbol = ""
 @app.route("/")
 @app.route("/Home/")
 def Index():
@@ -37,17 +38,17 @@ def Company():
 def Stocks():
     stock = [
         {
-            "c": 75.0875,
-            "h": 75.15,
-            "l": 73.7975,
-            "n": 1,
-            "o": 74.06,
-            "t": 1577941200000,
-            "v": 135647456,
-            "vw": 74.6099
+        "c": 162.41,
+        "d": -2.1,
+        "dp": -1.2765,
+        "h": 166.32,
+        "l": 162.3,
+        "o": 164.415,
+        "pc": 164.51,
+        "t": 1642798803
         }
     ]
-    return jsonify(stocks)
+    return jsonify(stock)
 # get request to https://finnhub.io
 @app.route("/api/Recommendation/", methods=["GET", "POST"])
 def Recommendation():
