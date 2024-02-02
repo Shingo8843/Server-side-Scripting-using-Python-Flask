@@ -21,6 +21,7 @@
 
         <div class="search">
           <svg
+            id="searchicon"
             aria-hidden="true"
             focusable="false"
             data-prefix="fas"
@@ -29,6 +30,7 @@
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
+            onclick="searchCompany()"
           >
             <path
               fill="currentColor"
@@ -38,10 +40,12 @@
           <input
             type="text"
             id="searchinput"
+            required
             class="searchinput"
             placeholder="Enter Stock Ticker Symbol"
           />
           <svg
+            id="clearicon"
             aria-hidden="true"
             focusable="false"
             data-prefix="fas"
@@ -50,6 +54,7 @@
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 352 512"
+            onclick="ClearSearchInput()"
           >
             <path
               fill="currentColor"
@@ -58,7 +63,12 @@
           </svg>
         </div>
       </div>
-      <div class="resultcontainer">
+      <div class="errormessage inactive" id="errormessage">
+        <p id="errormessagecontent">
+          Error: No record has been found, please enter a valid symbol
+        </p>
+      </div>
+      <div class="resultcontainer inactive" id="resultcontainer">
         <div class="tabs">
           <a class="tab active" id="company" onclick="getCompanyDetail()">
             Company
@@ -137,38 +147,50 @@
                 <tr>
                   <td>Change</td>
                   <td>
-                    <p id="change">-0.94</p>
-                    <img id="valuearrow" src="static\img\GreenArrowUp.png" />
+                    <div class="arrowcontainer">
+                      <p id="change">-0.94</p>
+                      <img
+                        class="valuearrow"
+                        id="valuearrow"
+                        src="static\img\GreenArrowUp.png"
+                      />
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td>Change Percent</td>
                   <td>
-                    <p id="changepercent">-0.79%</p>
-                    <img id="percentarrow" src="static\img\GreenArrowUp.png" />
+                    <div class="arrowcontainer">
+                      <p id="changepercent">-0.79%</p>
+                      <img
+                        class="percentarrow"
+                        id="percentarrow"
+                        src="static\img\GreenArrowUp.png"
+                      />
+                    </div>
                   </td>
                 </tr>
               </table>
-              <!-- recommendation trend -->
-              <div class="recommendationtrend" id="recommendationtrend">
-                <table>
-                  <tr>
-                    <td class="stongselltitle" id="stongselltitle">
-                      Strong Sell
-                    </td>
-                    <td class="strongsell" id="strongsell">0</td>
-                    <td class="sell" id="sell">0</td>
-                    <td class="hold" id="hold">6</td>
-                    <td class="buy" id="buy">6</td>
-                    <td class="strongbuy" id="strongbuy">19</td>
-                    <td class="strongbuytitle" id="strongbuytitle">
-                      Strong Buy
-                    </td>
-                  </tr>
-                </table>
-                <h2>Recommendation Trends</h2>
-              </div>
             </div>
+            <!-- recommendation trend -->
+            <div class="recommendationtrend" id="recommendationtrend">
+              <table class="recommendationtable">
+                <tr>
+                  <td class="stongselltitle" id="stongselltitle">
+                    Strong <br />Sell
+                  </td>
+                  <td class="strongsell" id="strongsell">0</td>
+                  <td class="sell" id="sell">0</td>
+                  <td class="hold" id="hold">6</td>
+                  <td class="buy" id="buy">6</td>
+                  <td class="strongbuy" id="strongbuy">19</td>
+                  <td class="strongbuytitle" id="strongbuytitle">
+                    Strong <br />Buy
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <h2 class="recommendationtitle">Recommendation Trends</h2>
           </div>
           <!-- Chart -->
           <div class="tabcontent inactive" id="chartsummary"></div>

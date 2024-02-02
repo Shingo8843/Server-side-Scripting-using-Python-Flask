@@ -1,4 +1,37 @@
 companySymbol = "";
+
+function searchCompany() {
+  var inputSymbol = document.getElementById("searchinput");
+  if (inputSymbol.value.trim() === "") {
+    console.log("Please enter a valid stock symbol");
+    inputSymbol.focus();
+    inputSymbol.reportValidity();
+    document.getElementById("errormessage").classList.remove("active");
+    document.getElementById("errormessage").classList.add("inactive");
+    document.getElementById("resultcontainer").classList.remove("active");
+    document.getElementById("resultcontainer").classList.add("inactive");
+  } else {
+    console.log("Searching for Stock: " + inputSymbol.value);
+    SetCompanySymbol(inputSymbol.value);
+    getCompanyDetail();
+  }
+}
+function ClearSearchInput() {
+  document.getElementById("searchinput").value = "";
+  document.getElementById("searchinput").focus();
+}
+function showResult() {
+  document.getElementById("errormessage").classList.remove("active");
+  document.getElementById("errormessage").classList.add("inactive");
+  document.getElementById("resultcontainer").classList.remove("inactive");
+  document.getElementById("resultcontainer").classList.add("active");
+}
+function showError() {
+  document.getElementById("errormessage").classList.remove("inactive");
+  document.getElementById("errormessage").classList.add("active");
+  document.getElementById("resultcontainer").classList.remove("active");
+  document.getElementById("resultcontainer").classList.add("inactive");
+}
 function SetCompanySymbol(symbol) {
   companySymbol = symbol;
 }
@@ -19,19 +52,22 @@ function ActivateTab(activeTab) {
     }
   }
 }
-// Function to handle fetching company details
 function getCompanyDetail() {
-  fetch("/api/Company")
+  fetch("/api/Company" + "?value=" + companySymbol)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      ActivateTab("companydetail");
-      UpdateCompanyDetail(data[0]);
+      if (data.length == 0) {
+        showError();
+      } else {
+        console.log(data);
+        UpdateCompanyDetail(data[0]);
+        ActivateTab("companydetail");
+        showResult();
+      }
     })
     .catch((error) => console.error("Error fetching company details:", error));
 }
 function UpdateCompanyDetail(company) {
-  // <div class="tabcontent inactive" id="companydetail"></div>, change this to tabcontent active
   document.getElementById("companyicon").src = company.logo;
   document.getElementById("companyname").innerText = company.name;
   document.getElementById("stocktickersymbol").innerText = company.ticker;
@@ -40,22 +76,30 @@ function UpdateCompanyDetail(company) {
   document.getElementById("companyipodate").innerText = company.ipo;
   document.getElementById("category").innerText = company.finnhubIndustry;
 }
-
-// Function to handle fetching stock summary
 function getStockSummary() {
-  fetch("/api/Stocks")
+  fetch("/api/Stocks" + "?value=" + companySymbol)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      ActivateTab("stocksummary");
-      UpdateStockSummary(data[0]);
+      if (data.length == 0) {
+        showError();
+      } else {
+        console.log(data);
+        UpdateStockSummary(data[0]);
+        showResult();
+      }
     })
     .catch((error) => console.error("Error fetching stock summary:", error));
-  fetch("/api/Recommendation/")
+  fetch("/api/Recommendation" + "?value=" + companySymbol)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      UpdateRecommendation(data[0]);
+      if (data.length == 0) {
+        showError();
+      } else {
+        console.log(data);
+        UpdateRecommendation(data[0]);
+        ActivateTab("stocksummary");
+        showResult();
+      }
     })
     .catch((error) => console.error("Error fetching recommendation:", error));
 }
@@ -79,26 +123,34 @@ function UpdateStockSummary(stock) {
   }
 }
 function UpdateRecommendation(recommendation) {}
-// Function to handle fetching charts
 function getChart() {
-  fetch("/api/Chart/")
+  fetch("/api/Chart" + "?value=" + companySymbol)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      ActivateTab("chartsummary");
-      UpdateChart(data[0]);
+      if (data.length == 0) {
+        showError();
+      } else {
+        console.log(data);
+        UpdateChart(data[0]);
+        ActivateTab("chartsummary");
+        showResult();
+      }
     })
     .catch((error) => console.error("Error fetching charts:", error));
 }
 function UpdateChart(chart) {}
-// Function to handle fetching the latest news
 function getLatestNews() {
-  fetch("/api/News/")
+  fetch("/api/News" + "?value=" + companySymbol + "&limit=5")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      ActivateTab("latestnews");
-      UpdateNews(data);
+      if (data.length == 0) {
+        showError();
+      } else {
+        console.log(data);
+        UpdateNews(data);
+        ActivateTab("latestnews");
+        showResult();
+      }
     })
     .catch((error) => console.error("Error fetching latest news:", error));
 }
