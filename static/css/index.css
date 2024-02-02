@@ -87,13 +87,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-top: 20px;
-  padding: 20px;
+  width: auto;
+  padding: 0% 10% 0% 10%;
   box-sizing: border-box;
-  background-color: #ff6666;
-  color: white;
+  background-color: #ccc;
+  color: black;
   font-size: 24px;
+  border-radius: 10px;
 }
 .errormessage.active {
   display: flex;
