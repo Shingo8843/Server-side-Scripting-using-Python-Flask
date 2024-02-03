@@ -82,21 +82,6 @@ def Chart():
         chart['timestamp'].append(agg.timestamp)
         chart['transactions'].append(agg.transactions)
         chart['otc'].append(agg.otc)
-    print(chart)
-    # if companySymbol == "TSLA":
-    #     chart = [
-    #         {
-    #             "c": 75.0875,
-    #             "h": 75.15,
-    #             "l": 73.7975,
-    #             "n": 1,
-    #             "o": 74.06,
-    #             "t": 1577941200000,
-    #             "v": 135647456,
-    #             "vw": 74.6099
-    #         }
-    #     ]
-
     if chart == {'open': [], 'high': [], 'low':[], 'close':[], 'volume':[], 'vwap':[], 'timestamp':[], 'transactions':[], 'otc':[]}:
         return jsonify([])
     return jsonify(chart)
@@ -107,33 +92,16 @@ def News():
     companySymbol = request.args.get('value', default=None, type=str)
     limit = request.args.get('limit', default=None, type=int)
     print(companySymbol, limit)
-    if companySymbol == "TSLA":
-        articles = [
-            {
-                "category": "company",
-                "datetime": 1642867200,
-                "headline": "Bitcoin drops below $35,000 Saturday as global market selloff spreads",
-                "id": "95112175",
-                "image": "https://s.yimg.com/ny/api/res/1.2/QSz447Gxee8mVgnlMtQX3Q--/YYxBwalWQ9aGlna...",
-                "related": "TSLA",
-                "source": "Yahoo",
-                "summary": "Cryptocurrency prices tumbled Friday night, with bitcoin hitting its l...",
-                "url": "https://finnhub.io/api/news?id=a889402cc5e86397f7ec1173fbebb770fb5abbb64621",
-            },
-            {
-                "category": "company",
-                "datetime": 1642859520,
-                "headline": "Why Does Bitcoin's Price Rise and Fall?",
-                "id": "95112199",
-                "image": "https://s.yimg.com/uu/api/res/1.2/Ankmgjy5S15TS6wlV_Psig--~B/aD0yNzU7dz0...",
-                "related": "TSLA",
-                "source": "Yahoo",
-                "summary": "Bitcoin's price has gone from $32,983 on Jan. 22, 2021 to $35,811 on t...",
-                "url": "https://finnhub.io/api/news?id=2809b72a2a1ea11972dbe1424dd85a0340beaa73f2e",
-            },
-            ]
-    else:
-        articles = {}
+    
+    #Get the date 6 months ago
+    today = datetime.now().date()
+    six_months_ago = today - relativedelta(months=6, days=1)
+    today_str = today.strftime('%Y-%m-%d')
+    six_months_and_one_day_ago_str = six_months_ago.strftime('%Y-%m-%d')#Get the date 6 months ago
+
+    SECRET_KEY = os.getenv('finnhub_api_key')
+    finnhub_client = finnhub.Client(api_key=SECRET_KEY)
+    articles = finnhub_client.company_news(symbol=companySymbol,  _from=six_months_and_one_day_ago_str, to=today_str)
     if articles == {}:
         return jsonify([])
     return jsonify(articles)

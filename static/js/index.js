@@ -201,6 +201,22 @@ function UpdateChart(data, companySymbol) {
       useHTML: true,
       text: '<a href="https://polygon.io" target="_blank" style="color: blue; text-decoration: underline; cursor: pointer;">Source: Polygon.io</a>',
     },
+
+    yAxis: [
+      {
+        title: {
+          text: "Stock Price",
+        },
+        opposite: false,
+      },
+      {
+        title: {
+          text: "Volume",
+        },
+        opposite: true,
+      },
+    ],
+
     series: [
       {
         name: companySymbol,
@@ -231,23 +247,9 @@ function UpdateChart(data, companySymbol) {
       {
         type: "column",
         name: "Volume",
-        data: volume, // This should be your volume data
+        data: volume,
         yAxis: 1,
-      },
-    ],
-
-    yAxis: [
-      {
-        title: {
-          text: "Stock Price",
-        },
-        opposite: false,
-      },
-      {
-        title: {
-          text: "Volume",
-        },
-        opposite: true,
+        color: "black",
       },
     ],
   });
@@ -273,12 +275,12 @@ function UpdateNews(news) {
     var newsdata = document.createElement("div");
     newsdata.className = "newsdata";
     newsdata.innerHTML = `
-      <div>
-        <img src="${news[i].image}" />
+      <div class="articlecontainer">
+        <img class = "articleimg" src="${news[i].image}" />
         <div>
-          <h3>${news[i].headline}</h3>
-          <p>${news[i].datetime}</p>
-          <a href="${news[i].url}" target="_blank">See Original Post</a>
+          <h3 class="articletitle">${news[i].headline}</h3>
+          <p class="articledate">${news[i].datetime}</p>
+          <a class="articleURL" href="${news[i].url}" target="_blank">See Original Post</a>
         </div>
       </div>
     `;
