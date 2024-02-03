@@ -60,7 +60,7 @@ function getCompanyDetail() {
         showError();
       } else {
         console.log(data);
-        UpdateCompanyDetail(data[0]);
+        UpdateCompanyDetail(data);
         ActivateTab("companydetail");
         showResult();
       }
@@ -84,7 +84,7 @@ function getStockSummary() {
         showError();
       } else {
         console.log(data);
-        UpdateStockSummary(data[0]);
+        UpdateStockSummary(data);
         showResult();
       }
     })
@@ -122,7 +122,13 @@ function UpdateStockSummary(stock) {
     document.getElementById("percentarrow").src = "static/img/RedArrowDown.png";
   }
 }
-function UpdateRecommendation(recommendation) {}
+function UpdateRecommendation(recommendation) {
+  document.getElementById("strongbuy").innerText = recommendation.strongBuy;
+  document.getElementById("buy").innerText = recommendation.buy;
+  document.getElementById("hold").innerText = recommendation.hold;
+  document.getElementById("sell").innerText = recommendation.sell;
+  document.getElementById("strongsell").innerText = recommendation.strongSell;
+}
 function getChart() {
   fetch("/api/Chart" + "?value=" + companySymbol)
     .then((response) => response.json())
@@ -131,14 +137,103 @@ function getChart() {
         showError();
       } else {
         console.log(data);
-        UpdateChart(data[0]);
+        UpdateChart(data, companySymbol);
         ActivateTab("chartsummary");
         showResult();
       }
     })
     .catch((error) => console.error("Error fetching charts:", error));
 }
-function UpdateChart(chart) {}
+function UpdateChart(data, companySymbol) {
+  const stockPrice = [],
+    volume = [],
+    dataLength = data["open"].length,
+    // set the allowed units for data grouping
+    groupingUnits = [
+      [
+        "day", // unit name
+        [7, 15], // allowed multiples
+      ],
+      ["month", [1, 3, 6]],
+    ];
+
+  for (let i = 0; i < dataLength; i += 1) {
+    stockPrice.push([
+      data["timestamp"][i], // the date
+      data["close"][i], // close
+    ]);
+
+    volume.push([
+      data["timestamp"][i], // the date
+      data["volume"][i], // the volume
+    ]);
+  }
+
+  // create the chart
+  Highcharts.stockChart("chartsummary", {
+    rangeSelector: {
+      selected: 4,
+    },
+
+    title: {
+      text: companySymbol + " Historical",
+    },
+
+    yAxis: [
+      {
+        labels: {
+          align: "left",
+          x: -3,
+        },
+        title: {
+          text: "Stock Price",
+        },
+        lineWidth: 2,
+        resize: {
+          enabled: true,
+        },
+      },
+      {
+        opposite: true,
+        labels: {
+          align: "right",
+          x: -3,
+        },
+        title: {
+          text: "Volume",
+        },
+        lineWidth: 2,
+        resize: {
+          enabled: true,
+        },
+      },
+    ],
+    tooltip: {
+      split: true,
+    },
+
+    series: [
+      {
+        type: "area",
+        name: "AAPL",
+        data: stockPrice,
+        yAxis: 0,
+        dataGrouping: {
+          units: groupingUnits,
+        },
+      },
+      {
+        type: "column",
+        name: "Volume",
+        data: volume,
+        yAxis: 1,
+        dataGrouping: {
+          units: groupingUnits,
+        },
+      },
+    ],
+  });
+}
 function getLatestNews() {
   fetch("/api/News" + "?value=" + companySymbol + "&limit=5")
     .then((response) => response.json())

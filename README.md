@@ -13,3 +13,6 @@ https://www.youtube.com/watch?v=8Dze7tFvcUM&ab_channel=CSCI571
 3. pip install Flask
 
    https://flask.palletsprojects.com/en/3.0.x/installation/
+
+requirement.txt:
+pip freeze > requirements.txt
