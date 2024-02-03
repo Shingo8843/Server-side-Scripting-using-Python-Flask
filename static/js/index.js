@@ -147,16 +147,7 @@ function getChart() {
 function UpdateChart(data, companySymbol) {
   const stockPrice = [],
     volume = [],
-    dataLength = data["open"].length,
-    // set the allowed units for data grouping
-    groupingUnits = [
-      [
-        "day", // unit name
-        [7, 15], // allowed multiples
-      ],
-      ["month", [1, 3, 6]],
-    ];
-
+    dataLength = data["open"].length;
   for (let i = 0; i < dataLength; i += 1) {
     stockPrice.push([
       data["timestamp"][i], // the date
@@ -172,64 +163,91 @@ function UpdateChart(data, companySymbol) {
   // create the chart
   Highcharts.stockChart("chartsummary", {
     rangeSelector: {
-      selected: 4,
+      buttons: [
+        {
+          type: "day",
+          count: 7,
+          text: "7d",
+        },
+        {
+          type: "day",
+          count: 15,
+          text: "15d",
+        },
+        {
+          type: "month",
+          count: 1,
+          text: "1m",
+        },
+        {
+          type: "month",
+          count: 3,
+          text: "3m",
+        },
+        {
+          type: "month",
+          count: 6,
+          text: "6m",
+        },
+      ],
+      selected: 2,
+      inputEnabled: false,
     },
 
     title: {
-      text: companySymbol + " Historical",
+      text: companySymbol + "Stock Price",
     },
-
-    yAxis: [
-      {
-        labels: {
-          align: "left",
-          x: -3,
-        },
-        title: {
-          text: "Stock Price",
-        },
-        lineWidth: 2,
-        resize: {
-          enabled: true,
-        },
-      },
-      {
-        opposite: true,
-        labels: {
-          align: "right",
-          x: -3,
-        },
-        title: {
-          text: "Volume",
-        },
-        lineWidth: 2,
-        resize: {
-          enabled: true,
-        },
-      },
-    ],
-    tooltip: {
-      split: true,
+    subtitle: {
+      useHTML: true,
+      text: '<a href="https://polygon.io" target="_blank" style="color: blue; text-decoration: underline; cursor: pointer;">Source: Polygon.io</a>',
     },
-
     series: [
       {
+        name: companySymbol,
+        data: stockPrice, // This should be your stock price data
         type: "area",
-        name: "AAPL",
-        data: stockPrice,
-        yAxis: 0,
-        dataGrouping: {
-          units: groupingUnits,
+        threshold: null,
+        tooltip: {
+          valueDecimals: 2,
+        },
+        fillColor: {
+          linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
+          },
+          stops: [
+            [0, Highcharts.getOptions().colors[0]],
+            [
+              1,
+              Highcharts.color(Highcharts.getOptions().colors[0])
+                .setOpacity(0)
+                .get("rgba"),
+            ],
+          ],
         },
       },
       {
         type: "column",
         name: "Volume",
-        data: volume,
+        data: volume, // This should be your volume data
         yAxis: 1,
-        dataGrouping: {
-          units: groupingUnits,
+      },
+    ],
+
+    yAxis: [
+      {
+        title: {
+          text: "Stock Price",
         },
+        opposite: false,
+      },
+      {
+        title: {
+          text: "Volume",
+        },
+        opposite: true,
       },
     ],
   });
