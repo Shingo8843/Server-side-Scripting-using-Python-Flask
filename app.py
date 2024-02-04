@@ -1,4 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+
+
+app = Flask(__name__)
+
+
+
 import finnhub
 import os
 from dotenv import load_dotenv
@@ -6,7 +12,7 @@ from polygon import RESTClient
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-app = Flask(__name__)
+
 load_dotenv()  # This loads the environment variables from .env.
 
 companySymbol = ""
