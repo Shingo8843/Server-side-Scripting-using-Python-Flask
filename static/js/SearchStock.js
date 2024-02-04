@@ -1,5 +1,11 @@
 companySymbol = "";
-
+document
+  .getElementById("searchinput")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      searchCompany();
+    }
+  });
 function searchCompany() {
   var inputSymbol = document.getElementById("searchinput");
   if (inputSymbol.value.trim() === "") {
@@ -19,6 +25,13 @@ function searchCompany() {
 function ClearSearchInput() {
   document.getElementById("searchinput").value = "";
   document.getElementById("searchinput").focus();
+  ClearResult();
+}
+function ClearResult() {
+  document.getElementById("errormessage").classList.remove("active");
+  document.getElementById("errormessage").classList.add("inactive");
+  document.getElementById("resultcontainer").classList.remove("active");
+  document.getElementById("resultcontainer").classList.add("inactive");
 }
 function showResult() {
   document.getElementById("errormessage").classList.remove("active");
@@ -112,14 +125,18 @@ function UpdateStockSummary(stock) {
   document.getElementById("change").innerText = stock.d;
   document.getElementById("changepercent").innerText = stock.dp;
   if (stock.d > 0) {
-    document.getElementById("valuearrow").src = "static/img/GreenArrowUp.png";
+    document.getElementById("valuearrow").src =
+      "../static/img/GreenArrowUp.png";
   } else {
-    document.getElementById("valuearrow").src = "static/img/RedArrowDown.png";
+    document.getElementById("valuearrow").src =
+      "../static/img/RedArrowDown.png";
   }
   if (stock.dp > 0) {
-    document.getElementById("percentarrow").src = "static/img/GreenArrowUp.png";
+    document.getElementById("percentarrow").src =
+      "../static/img/GreenArrowUp.png";
   } else {
-    document.getElementById("percentarrow").src = "static/img/RedArrowDown.png";
+    document.getElementById("percentarrow").src =
+      "../static/img/RedArrowDown.png";
   }
 }
 function UpdateRecommendation(recommendation) {
@@ -144,7 +161,21 @@ function getChart() {
     })
     .catch((error) => console.error("Error fetching charts:", error));
 }
+function getTodaysDate() {
+  var today = new Date();
+  return (
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+  );
+}
+function formatDate(timestamp) {
+  const date = new Date(timestamp * 1000);
+  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+  return `${day} ${month}, ${year}`;
+}
 function UpdateChart(data, companySymbol) {
+  const today = getTodaysDate();
   const stockPrice = [],
     volume = [],
     dataLength = data["open"].length;
@@ -195,7 +226,7 @@ function UpdateChart(data, companySymbol) {
     },
 
     title: {
-      text: companySymbol + "Stock Price",
+      text: companySymbol + "Stock Price" + today,
     },
     subtitle: {
       useHTML: true,
@@ -214,9 +245,16 @@ function UpdateChart(data, companySymbol) {
           text: "Volume",
         },
         opposite: true,
+        maxPadding: 2.0,
       },
     ],
-
+    xAxis: {
+      tickInterval: 24 * 3600 * 1000, // Daily interval
+      dateTimeLabelFormats: {
+        // Displaying the format as day
+        day: "%e. %b",
+      },
+    },
     series: [
       {
         name: companySymbol,
@@ -255,7 +293,7 @@ function UpdateChart(data, companySymbol) {
   });
 }
 function getLatestNews() {
-  fetch("/api/News" + "?value=" + companySymbol + "&limit=5")
+  fetch("/api/News" + "?value=" + companySymbol)
     .then((response) => response.json())
     .then((data) => {
       if (data.length == 0) {
@@ -271,19 +309,41 @@ function getLatestNews() {
 }
 function UpdateNews(news) {
   document.getElementById("latestnews").innerHTML = "";
-  for (i = 0; i < news.length; i++) {
+  for (var i = 0; i < Math.min(5, news.length); i++) {
     var newsdata = document.createElement("div");
     newsdata.className = "newsdata";
-    newsdata.innerHTML = `
+    if (news[i].image == "") {
+      newsdata.innerHTML = `
       <div class="articlecontainer">
-        <img class = "articleimg" src="${news[i].image}" />
+        <div class="articleimgcontainer">
+          <div class = "noimage">No Image Available</div>
+        </div>
         <div>
-          <h3 class="articletitle">${news[i].headline}</h3>
-          <p class="articledate">${news[i].datetime}</p>
-          <a class="articleURL" href="${news[i].url}" target="_blank">See Original Post</a>
+          <p class="articletitle">${news[i].headline}</p>
+          <p class="articledate">${formatDate(news[i].datetime)}</p>
+          <a class="articleURL" href="${
+            news[i].url
+          }" target="_blank">See Original Post</a>
         </div>
       </div>
     `;
+    } else {
+      newsdata.innerHTML = `
+      <div class="articlecontainer">
+        <div class="articleimgcontainer">
+          <img class = "articleimg" src="${news[i].image}" />
+        </div>
+        <div>
+          <p class="articletitle">${news[i].headline}</p>
+          <p class="articledate">${formatDate(news[i].datetime)}</p>
+          <a class="articleURL" href="${
+            news[i].url
+          }" target="_blank">See Original Post</a>
+        </div>
+      </div>
+    `;
+    }
+
     document.getElementById("latestnews").appendChild(newsdata);
   }
 }

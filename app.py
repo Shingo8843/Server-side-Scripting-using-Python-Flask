@@ -10,10 +10,10 @@ app = Flask(__name__)
 load_dotenv()  # This loads the environment variables from .env.
 
 companySymbol = ""
-@app.route("/")
-@app.route("/Home/")
-def Index():
-    return render_template("index.html")
+
+@app.route("/SearchStock/")
+def SearchStock():
+    return render_template("searchStock.html")
 
 # get request to https://finnhub.io
 @app.route("/api/Company/", methods=["GET", "POST"])
@@ -95,13 +95,14 @@ def News():
     
     #Get the date 6 months ago
     today = datetime.now().date()
-    six_months_ago = today - relativedelta(months=6, days=1)
+    thirty_days_ago = today - relativedelta( days=30)
     today_str = today.strftime('%Y-%m-%d')
-    six_months_and_one_day_ago_str = six_months_ago.strftime('%Y-%m-%d')#Get the date 6 months ago
+    thirty_days_ago_str = thirty_days_ago.strftime('%Y-%m-%d')#Get the date 6 months ago
 
     SECRET_KEY = os.getenv('finnhub_api_key')
     finnhub_client = finnhub.Client(api_key=SECRET_KEY)
-    articles = finnhub_client.company_news(symbol=companySymbol,  _from=six_months_and_one_day_ago_str, to=today_str)
+    articles = finnhub_client.company_news(symbol=companySymbol,  _from=thirty_days_ago_str, to=today_str)
+    print(articles)
     if articles == {}:
         return jsonify([])
     return jsonify(articles)

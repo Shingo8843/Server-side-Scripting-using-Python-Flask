@@ -8,7 +8,7 @@
     </title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/index.css') }}"
+      href="{{ url_for('static', filename='css/searchStock.css') }}"
     />
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -154,11 +154,7 @@
                   <td>
                     <div class="arrowcontainer">
                       <p id="change">-0.94</p>
-                      <img
-                        class="valuearrow"
-                        id="valuearrow"
-                        src="static\img\GreenArrowUp.png"
-                      />
+                      <img class="valuearrow" id="valuearrow" src="" />
                     </div>
                   </td>
                 </tr>
@@ -167,11 +163,7 @@
                   <td>
                     <div class="arrowcontainer">
                       <p id="changepercent">-0.79%</p>
-                      <img
-                        class="percentarrow"
-                        id="percentarrow"
-                        src="static\img\GreenArrowUp.png"
-                      />
+                      <img class="percentarrow" id="percentarrow" src="" />
                     </div>
                   </td>
                 </tr>
@@ -195,7 +187,7 @@
                 </tr>
               </table>
             </div>
-            <h2 class="recommendationtitle">Recommendation Trends</h2>
+            <p class="recommendationtitle">Recommendation Trends</p>
           </div>
           <!-- Chart -->
           <div class="tabcontent inactive" id="chartsummary"></div>
@@ -204,6 +196,6 @@
         </div>
       </div>
     </div>
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/searchStock.js') }}"></script>
   </body>
 </html>
