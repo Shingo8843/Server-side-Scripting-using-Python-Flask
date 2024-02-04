@@ -117,7 +117,7 @@ function getStockSummary() {
     .catch((error) => console.error("Error fetching recommendation:", error));
 }
 function UpdateStockSummary(stock) {
-  document.getElementById("tradingday").innerText = stock.t;
+  document.getElementById("tradingday").innerText = formatDate(stock.t);
   document.getElementById("previousclosingprice").innerText = stock.pc;
   document.getElementById("openingprice").innerText = stock.o;
   document.getElementById("highprice").innerText = stock.h;
