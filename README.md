@@ -16,3 +16,8 @@ https://www.youtube.com/watch?v=8Dze7tFvcUM&ab_channel=CSCI571
 
 requirement.txt:
 pip freeze > requirements.txt
+
+Cloud Set Up
+
+gcloud app deploy
+gcloud app browse
