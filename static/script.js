@@ -180,18 +180,10 @@ function UpdateChart(data, companySymbol) {
     volume = [],
     dataLength = data["open"].length;
   for (let i = 0; i < dataLength; i += 1) {
-    stockPrice.push([
-      data["timestamp"][i], // the date
-      data["close"][i], // close
-    ]);
+    stockPrice.push([data["timestamp"][i], data["close"][i]]);
 
-    volume.push([
-      data["timestamp"][i], // the date
-      data["volume"][i], // the volume
-    ]);
+    volume.push([data["timestamp"][i], data["volume"][i]]);
   }
-
-  // create the chart
   Highcharts.stockChart("chartsummary", {
     rangeSelector: {
       buttons: [
@@ -249,16 +241,15 @@ function UpdateChart(data, companySymbol) {
       },
     ],
     xAxis: {
-      tickInterval: 24 * 3600 * 1000, // Daily interval
+      tickInterval: 24 * 3600 * 1000,
       dateTimeLabelFormats: {
-        // Displaying the format as day
         day: "%e. %b",
       },
     },
     series: [
       {
         name: companySymbol,
-        data: stockPrice, // This should be your stock price data
+        data: stockPrice,
         type: "area",
         threshold: null,
         tooltip: {
