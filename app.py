@@ -23,7 +23,7 @@ def SearchStock():
 
 @app.route("/api/Company/", methods=["GET", "POST"])
 def Company():
-    companySymbol = request.args.get('value', default=None, type=str)
+    companySymbol = request.args.get('value', default=None, type=str).upper()
     SECRET_KEY = os.getenv('finnhub_api_key')
     finnhub_client = finnhub.Client(api_key=SECRET_KEY)
     company = finnhub_client.company_profile2(symbol=companySymbol)
@@ -34,7 +34,7 @@ def Company():
 
 @app.route("/api/Stocks/", methods=["GET", "POST"])
 def Stocks():
-    companySymbol = request.args.get('value', default=None, type=str)
+    companySymbol = request.args.get('value', default=None, type=str).upper()
     SECRET_KEY = os.getenv('finnhub_api_key')
     finnhub_client = finnhub.Client(api_key=SECRET_KEY)
     stock = finnhub_client.quote(symbol=companySymbol)
@@ -43,7 +43,7 @@ def Stocks():
     return jsonify(stock)
 @app.route("/api/Recommendation/", methods=["GET", "POST"])
 def Recommendation():
-    companySymbol = request.args.get('value', default=None, type=str)
+    companySymbol = request.args.get('value', default=None, type=str).upper()
     SECRET_KEY = os.getenv('finnhub_api_key')
     finnhub_client = finnhub.Client(api_key=SECRET_KEY)
     recommendation = finnhub_client.recommendation_trends(symbol=companySymbol)
@@ -53,7 +53,7 @@ def Recommendation():
 
 @app.route("/api/Chart/", methods=["GET", "POST"])
 def Chart():
-    companySymbol = request.args.get('value', default=None, type=str)
+    companySymbol = request.args.get('value', default=None, type=str).upper()
     print(companySymbol)
 
 
@@ -87,7 +87,7 @@ def Chart():
 
 @app.route("/api/News/", methods=["GET", "POST"])
 def News():
-    companySymbol = request.args.get('value', default=None, type=str)
+    companySymbol = request.args.get('value', default=None, type=str).upper()
     limit = request.args.get('limit', default=None, type=int)
     print(companySymbol, limit)
     

@@ -35,22 +35,27 @@
 .websitetitle {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 36px;
-  font-weight: bold;
+  font-weight: normal;
   align-self: center;
 }
 .search {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   margin-left: 30%;
   margin-right: 30%;
+  width: auto;
+  background: white;
+  box-shadow: #ccc 1px 1px 1px;
 }
 
 .searchinput {
   font-family: Arial, Helvetica, sans-serif;
-
-  border: 1px solid #ccc;
+  border-left: none;
+  border-right: 1px solid #ebebeb;
+  border-top: none;
+  border-bottom: none;
   padding: 5px;
   outline: none;
   flex-grow: 1;
@@ -61,9 +66,10 @@
   color: #ccc;
   margin-right: 5px;
   cursor: pointer;
-  height: 24px;
+  height: 16px;
   width: auto;
-  padding: 5px;
+  padding: 10px;
+  background: transparent;
 }
 
 .svg-inline--fa:hover {
@@ -88,14 +94,14 @@
 }
 .errormessage {
   font-family: Arial, Helvetica, sans-serif;
-
+  margin-top: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: auto;
   padding: 0% 10% 0% 10%;
   box-sizing: border-box;
-  background-color: #ccc;
+  background-color: rgb(240, 240, 240);
   color: black;
   font-size: 24px;
   border-radius: 10px;
@@ -146,8 +152,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin-bottom: 20px;
   width: 100%;
+}
+.companyicon {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: block;
+  content: "No Image Available";
 }
 .companytable {
   justify-content: center;

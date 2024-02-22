@@ -8,6 +8,7 @@ document
   });
 function searchCompany() {
   var inputSymbol = document.getElementById("searchinput");
+  // inputSymbol.value = inputSymbol.value.toUpperCase();
   if (inputSymbol.value.trim() === "") {
     console.log("Please enter a valid stock symbol");
     inputSymbol.focus();
@@ -46,7 +47,7 @@ function showError() {
   document.getElementById("resultcontainer").classList.add("inactive");
 }
 function SetCompanySymbol(symbol) {
-  companySymbol = symbol;
+  companySymbol = symbol.toUpperCase();
 }
 function ActivateTab(activeTab) {
   tabs = ["companydetail", "stocksummary", "chartsummary", "latestnews"];
@@ -213,12 +214,12 @@ function UpdateChart(data, companySymbol) {
           text: "6m",
         },
       ],
-      selected: 2,
+      selected: 0,
       inputEnabled: false,
     },
 
     title: {
-      text: companySymbol + "Stock Price" + today,
+      text: companySymbol + " Stock Price " + today,
     },
     subtitle: {
       useHTML: true,
@@ -279,6 +280,7 @@ function UpdateChart(data, companySymbol) {
         data: volume,
         yAxis: 1,
         color: "black",
+        pointWidth: 4,
       },
     ],
   });
